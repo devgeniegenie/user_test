@@ -23,23 +23,16 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenUtil jwtTokenUtil;
 
     @Override
-    public Optional<UserEntity> getUserById(String id) {
-        return userRepository.findById(id);
-    }
-
-    @Override
     public ResponseUserVO createUser(RequestUserVO requestUserVO) {
+        if (userRepository.findById(requestUserVO.getId()).isPresent()) {
+            throw new ConflictResourceException("중복된 ID입니다");
+        }
 
         UserEntity userEntity = UserEntity.builder()
                 .id(requestUserVO.getId())
                 .password(bCryptPasswordEncoder.encode(requestUserVO.getPassword()))
                 .build();
-
-        try {
-            userRepository.save(userEntity);
-        } catch (ConflictResourceException e) {
-            throw new ConflictResourceException(requestUserVO.getId() + "는 중복된 ID입니다");
-        }
+        userRepository.save(userEntity);
 
         return ResponseUserVO.builder().id(userEntity.getId()).build();
     }
