@@ -36,8 +36,8 @@ public class UserController {
                                             @ExampleObject(
                                                     name = "회원가입 성공 입력값 예제",
                                                     value = "{\n" +
-                                                            " \"userId\": \"유저아이디1\",\n" +
-                                                            " \"password\": \"1234\",\n" +
+                                                            " \"id\": \"userId\",\n" +
+                                                            " \"password\": \"123456\"\n" +
                                                             "}\n"
                                             )
                                     }
