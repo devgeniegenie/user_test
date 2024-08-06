@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    ResponseUserVO createUser(RequestUserVO userEntity);
+    ResponseUserVO createUser(RequestUserVO requestUserVO);
+
+    ResponseUserVO login(RequestUserVO requestUserVO);
 }

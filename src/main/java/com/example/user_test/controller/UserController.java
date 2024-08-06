@@ -59,9 +59,18 @@ public class UserController {
     )
     @PostMapping("/users")
     public ResponseEntity<?> user(@RequestBody RequestUserVO requestUserVO) {
+        //TODO : ModelMapper를 사용하게 코드 수정 필요
+
         ResponseUserVO responseUserVO = userService.createUser(requestUserVO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUserVO);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody RequestUserVO requestUserVO) {
+        ResponseUserVO responseUserVO = userService.login(requestUserVO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseUserVO);
     }
 
     @GetMapping("/ConflictTest")

@@ -13,6 +13,8 @@ import java.net.URI;
 @Builder
 public class ResponseUserVO {
     private String id;
+
+    //TODO : 토큰들을 관리할 하나의 dto 생성 예정
     private String accessToken;
     private String refreshToken;
     private URI location;

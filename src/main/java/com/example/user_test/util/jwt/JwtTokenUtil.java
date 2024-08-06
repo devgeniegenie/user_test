@@ -11,9 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class JwtTokenUtil {
     public String createJwtToken(String id, String expiration, String secret) {
+        //TODO : 토큰생성시 차후 필요할 값들 더 세팅하기
         return Jwts.builder().setSubject(id)
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(expiration)))
-                .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 }
