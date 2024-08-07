@@ -22,8 +22,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ConflictResourceException.class)
-    public final ResponseEntity<Object> handleConflictResourceException(Exception ex, WebRequest webRequest) {
+    @ExceptionHandler(InvalidRequestException.class)
+    public final ResponseEntity<Object> handleInvalidResourceException(Exception ex, WebRequest webRequest) {
         log.error("message : {}", NestedExceptionUtils.getMostSpecificCause(ex));
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.CONFLICT);

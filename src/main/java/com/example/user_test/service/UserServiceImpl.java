@@ -1,7 +1,6 @@
 package com.example.user_test.service;
 
 import com.example.user_test.entity.UserEntity;
-import com.example.user_test.exception.ConflictResourceException;
 import com.example.user_test.exception.InvalidRequestException;
 import com.example.user_test.repository.UserRepository;
 import com.example.user_test.util.jwt.JwtTokenUtil;
@@ -12,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -30,7 +27,7 @@ public class UserServiceImpl implements UserService {
         //TODO : ModelMapper 사용
 
         if (userRepository.findById(requestUserVO.getId()).isPresent()) {
-            throw new ConflictResourceException("중복된 ID입니다");
+            throw new InvalidRequestException("중복된 ID입니다");
         }
 
         UserEntity userEntity = UserEntity.builder()

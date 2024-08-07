@@ -1,6 +1,6 @@
 package com.example.user_test.controller;
 
-import com.example.user_test.exception.ConflictResourceException;
+import com.example.user_test.exception.InvalidRequestException;
 import com.example.user_test.service.UserService;
 import com.example.user_test.vo.RequestUserVO;
 import com.example.user_test.vo.ResponseUserVO;
@@ -13,7 +13,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
@@ -73,14 +77,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(responseUserVO);
     }
 
-    @GetMapping("/ConflictTest")
+    @GetMapping("/invalidRequestExceptionTest")
     public ResponseEntity<?> conflictTest() {
-        throw new ConflictResourceException("중복된 입력값 오류 발생");
+        throw new InvalidRequestException("잘못된 입력값 오류 발생");
     }
 
     @GetMapping("/exceptionTest")
     public ResponseEntity<?> exceptionTest() throws Exception {
-        throw new Exception("중복된 입력값 오류 발생");
+        throw new Exception("공통 오류 발생");
     }
 
 }
