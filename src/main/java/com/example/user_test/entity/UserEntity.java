@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
@@ -14,7 +13,6 @@ import org.springframework.lang.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 @Table(name = "USERS")
 public class UserEntity {
     @Id

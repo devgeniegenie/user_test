@@ -1,5 +1,6 @@
 package com.example.user_test.controller;
 
+import com.example.user_test.dto.UserDto;
 import com.example.user_test.exception.InvalidRequestException;
 import com.example.user_test.service.UserService;
 import com.example.user_test.vo.RequestUserVO;
@@ -11,6 +12,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,16 +66,23 @@ public class UserController {
     )
     @PostMapping("/users")
     public ResponseEntity<?> user(@RequestBody RequestUserVO requestUserVO) {
-        //TODO : ModelMapper를 사용하게 코드 수정 필요
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        ResponseUserVO responseUserVO = userService.createUser(requestUserVO);
+        UserDto userDto = mapper.map(requestUserVO, UserDto.class);
+        userService.createUser(userDto);
+        ResponseUserVO responseUserVO = mapper.map(userDto, ResponseUserVO.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUserVO);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody RequestUserVO requestUserVO) {
-        ResponseUserVO responseUserVO = userService.login(requestUserVO);
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        UserDto userDto = mapper.map(requestUserVO, UserDto.class);
+        ResponseUserVO responseUserVO = mapper.map(userService.login(userDto), ResponseUserVO.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(responseUserVO);
     }
