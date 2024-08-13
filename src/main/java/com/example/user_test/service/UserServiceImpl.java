@@ -1,5 +1,6 @@
 package com.example.user_test.service;
 
+import com.example.user_test.dto.TokenDto;
 import com.example.user_test.dto.UserDto;
 import com.example.user_test.entity.UserEntity;
 import com.example.user_test.exception.InvalidRequestException;
@@ -8,6 +9,7 @@ import com.example.user_test.util.jwt.JwtTokenUtil;
 import com.example.user_test.vo.RequestUserVO;
 import com.example.user_test.vo.ResponseUserVO;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -58,13 +60,16 @@ public class UserServiceImpl implements UserService {
 
         UserDto returnUserDto = mapper.map(userEntity, UserDto.class);
 
-        //TODO : 토큰들을 담을 하나의 dto 생성 예정
         //access토큰, refresh토큰 생성
         String accessToken = jwtTokenUtil.createJwtToken(returnUserDto.getId(), env.getProperty("access_token.expiration_time"), env.getProperty("access_token.secret"));
         String refreshToken = jwtTokenUtil.createJwtToken(returnUserDto.getId(), env.getProperty("refresh_token.expiration_time"), env.getProperty("refresh_token.secret"));
 
-        returnUserDto.setAccessToken(accessToken);
-        returnUserDto.setRefreshToken(refreshToken);
+        TokenDto tokenDto = TokenDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        returnUserDto.setTokenDto(tokenDto);
 
         // 응답 객체 생성 및 반환
         return returnUserDto;

@@ -8,6 +8,5 @@ import lombok.Data;
 public class UserDto {
     private String id;
     private String password;
-    private String accessToken;
-    private String refreshToken;
+    private TokenDto tokenDto;
 }

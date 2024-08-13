@@ -1,5 +1,6 @@
 package com.example.user_test.vo;
 
+import com.example.user_test.dto.TokenDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,6 @@ import java.net.URI;
 public class ResponseUserVO {
     private String id;
 
-    private String accessToken;
-    private String refreshToken;
+    private TokenDto tokenDto;
     private URI location;
 }
