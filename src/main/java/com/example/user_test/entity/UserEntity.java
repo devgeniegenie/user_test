@@ -14,7 +14,7 @@ import org.springframework.lang.NonNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class UserEntity {
+public class UserEntity extends BaseEntity{
     @Id
     private String id;
 
