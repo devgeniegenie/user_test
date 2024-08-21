@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
             throw new InvalidRequestException("중복된 ID입니다");
         }
 
+        //비밀번호 암호화
+        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+
         UserEntity userEntity = mapper.map(userDto, UserEntity.class);
         userRepository.save(userEntity);
 

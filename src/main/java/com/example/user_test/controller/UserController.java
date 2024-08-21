@@ -76,6 +76,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUserVO);
     }
 
+    @Operation(
+            summary = "로그인 API",
+            description = "유저아이디, 비밀번호를 입력하여 로그인합니다.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            schema = @Schema(implementation = RequestUserVO.class),
+                            examples =
+                                    {
+                                            @ExampleObject(
+                                                    name = "로그인 성공 입력값 예제",
+                                                    value = "{\n" +
+                                                            " \"id\": \"userId\",\n" +
+                                                            " \"password\": \"123456\"\n" +
+                                                            "}\n"
+                                            )
+                                    }
+                    )
+            )
+    )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody RequestUserVO requestUserVO) {
         ModelMapper mapper = new ModelMapper();
