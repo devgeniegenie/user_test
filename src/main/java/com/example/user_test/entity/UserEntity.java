@@ -19,6 +19,9 @@ public class UserEntity extends BaseEntity{
     private String id;
 
     @NonNull
+    private String userName;
+
+    @NonNull
     private String password;
 
     @Column(name = "REFRESH_TOKEN")

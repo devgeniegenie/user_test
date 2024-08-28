@@ -29,4 +29,11 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(UnAuthorizedReqeustException.class)
+    public final ResponseEntity<Object> handleUnAuthorizedRequestException(Exception ex, WebRequest webRequest) {
+        log.error("message : {}", NestedExceptionUtils.getMostSpecificCause(ex));
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), webRequest.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.UNAUTHORIZED);
+    }
+
 }

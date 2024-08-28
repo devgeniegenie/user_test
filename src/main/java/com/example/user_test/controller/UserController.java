@@ -1,7 +1,6 @@
 package com.example.user_test.controller;
 
 import com.example.user_test.dto.UserDto;
-import com.example.user_test.exception.InvalidRequestException;
 import com.example.user_test.service.UserService;
 import com.example.user_test.vo.RequestUserVO;
 import com.example.user_test.vo.ResponseUserVO;
@@ -106,14 +105,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(responseUserVO);
     }
 
-    @GetMapping("/invalidRequestExceptionTest")
-    public ResponseEntity<?> conflictTest() {
-        throw new InvalidRequestException("잘못된 입력값 오류 발생");
+    // test : JWT 검증이 필요 없는 엔드포인트
+    @GetMapping("/public")
+    public String publicEndpoint() {
+        return "This is a public endpoint, accessible without authentication.";
     }
 
-    @GetMapping("/exceptionTest")
-    public ResponseEntity<?> exceptionTest() throws Exception {
-        throw new Exception("공통 오류 발생");
+    // test : JWT 검증이 필요한 엔드포인트
+    @GetMapping("/secure")
+    public String secureEndpoint() {
+        return "This is a secure endpoint, accessible only with a valid JWT token.";
     }
 
 }
